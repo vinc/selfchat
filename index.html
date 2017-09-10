@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="app.css">
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+  </head>
+  <body class="bg-light">
+    <div id="app" class="container d-flex flex-column justify-content-end" style="max-width:40em;min-height:100vh">
+      <div class="mt-3 mb-auto">
+        <h1 class="display-3 p-2 text-center text-dark">Self Chat</h1>
+      </div>
+
+      <div class="alert alert-warning alert-dismissible fade show mt-2 mb-2" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+
+        <p><strong>Writing to yourself can help you feel better.</strong></p>
+        
+        <p>Send a message to yourself, then switch side and answer with kindness and compassion, as if you were chatting with a close friend.</p>
+
+        <p>Everything you write is completely private, nothing will leave your browser. Close this page and it's gone.</p>
+      </div>
+
+      <div v-if="screenA" v-cloak>
+        <div class="d-flex mt-2" v-bind:class="{ 'flex-row-reverse': message.a }" v-for="message in messages">
+          <div class="p-2 text-white" v-bind:class="{ 'border-a': message.a, 'border-b': message.b, 'bg-secondary': message.a, 'bg-info': message.b }">
+            {{ message.text }}
+          </div>
+        </div>
+
+        <form class="my-3">
+          <div class="form-group">
+            <textarea id="text-a" class="form-control" rows="3" v-model="textA" v-on:keydown.enter.prevent="sendA" v-on:keydown.tab.prevent="switchScreen" placeholder="Write a message (hit enter to send or tab to switch side)"></textarea>
+          </div>
+
+          <button type="button" class="btn btn-outline-secondary float-right" v-on:click="sendA">Send</button>
+          <button type="button" class="btn btn-outline-info" v-on:click="switchScreen">Switch</button>
+        </form>
+      </div>
+
+      <div v-if="screenB" v-cloak>
+        <div class="d-flex mt-2" v-bind:class="{ 'flex-row-reverse': message.b }" v-for="message in messages">
+          <div class="p-2 text-white" v-bind:class="{ 'border-a': message.b, 'border-b': message.a, 'bg-secondary': message.b, 'bg-info': message.a }">
+            {{ message.text }}
+          </div>
+        </div>
+
+        <form class="my-3">
+          <div class="form-group">
+            <textarea id="text-b" class="form-control" rows="3" v-model="textB" v-on:keydown.enter.prevent="sendB" v-on:keydown.tab.prevent="switchScreen" placeholder="Write a message (hit enter to send or tab to switch side)"></textarea>
+          </div>
+
+          <button type="button" class="btn btn-outline-secondary float-right" v-on:click="sendB">Send</button>
+          <button type="button" class="btn btn-outline-info" v-on:click="switchScreen">Switch</button>
+        </form>
+      </div>
+    </div>
+
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="node_modules/popper.js/dist/umd/popper.min.js"></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="node_modules/vue/dist/vue.min.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
